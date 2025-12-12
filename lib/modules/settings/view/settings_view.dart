@@ -63,6 +63,60 @@ class SettingsView extends GetView<SettingsController> {
                   onChange: () => controller.tva.value =
                       double.tryParse(tvaController.text) ?? 0.0,
                 ),
+
+                const SizedBox(height: 24),
+                
+                // Import/Export Section
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Data Management',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosButton(
+                              text: 'Export Data',
+                              icon: Icons.download,
+                              backgroundColor: Colors.green,
+                              onPressed: () => controller.exportData(),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: PosButton(
+                              text: 'Import Data',
+                              icon: Icons.upload,
+                              backgroundColor: Colors.orange,
+                              onPressed: () => controller.importData(),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Export: Save all your data to an Excel file\nImport: Load data from an Excel file (will replace existing data)',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                
                 const SizedBox(height: 32),
                 Align(
                   alignment: Alignment.centerRight,
