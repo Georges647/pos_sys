@@ -17,7 +17,7 @@ class CheckoutView extends GetView<CheckoutController> {
         children: [
           // Cart Items Section
           Expanded(
-            flex: 2,
+            flex: 5,
             child: Obx(
               () => controller.cartItems.isEmpty
                   ? const Center(child: Text('No items in cart'))
@@ -26,9 +26,18 @@ class CheckoutView extends GetView<CheckoutController> {
                       itemBuilder: (context, index) {
                         final item = controller.cartItems[index];
                         return ListTile(
-                          title: Text(item.description ?? 'Product'),
+                          title: Text(
+                            item.description ?? 'Product',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                           subtitle: Text(
                             'Price: \$${item.sellingPrice} x ${item.quantity}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
@@ -42,7 +51,6 @@ class CheckoutView extends GetView<CheckoutController> {
           const Divider(),
           // Totals Section
           Expanded(
-            flex: 1,
             child: Obx(
               () => Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -52,36 +60,54 @@ class CheckoutView extends GetView<CheckoutController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Total (USD):'),
-                        Text(
-                          '\$${controller.totalUSD.value.toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        const Text(
+                          'Total (USD):',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Total (LBP):'),
                         Text(
-                          '${NumberFormat('#,###').format(controller.totalLBP.value)} LBP',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Remaining:'),
-                        Text(
-                          '\$${controller.remainingAmount.value.toStringAsFixed(2)}',
+                          '${NumberFormat('#,##0.00').format(controller.totalUSD.value)} \$',
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Total (LBP):',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '${NumberFormat('#,###').format(controller.totalLBP.value)} LBP',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     const Text('Remaining:'),
+                    //     Text(
+                    //       '\$${controller.remainingAmount.value.toStringAsFixed(2)}',
+                    //       style: const TextStyle(
+                    //         fontWeight: FontWeight.bold,
+                    //         color: Colors.green,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -89,34 +115,34 @@ class CheckoutView extends GetView<CheckoutController> {
           ),
           const Divider(),
           // Predefined Bills Section
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.count(
-                crossAxisCount: 3,
-                childAspectRatio: 2,
-                children: controller.predefinedBills
-                    .map(
-                      (bill) => Card(
-                        child: InkWell(
-                          onTap: () => controller.applyPredefinedBill(bill),
-                          child: Center(
-                            child: Text(
-                              '\$$bill',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   flex: 1,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: GridView.count(
+          //       crossAxisCount: 3,
+          //       childAspectRatio: 2,
+          //       children: controller.predefinedBills
+          //           .map(
+          //             (bill) => Card(
+          //               child: InkWell(
+          //                 onTap: () => controller.applyPredefinedBill(bill),
+          //                 child: Center(
+          //                   child: Text(
+          //                     '\$$bill',
+          //                     style: const TextStyle(
+          //                       fontWeight: FontWeight.bold,
+          //                       fontSize: 16,
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           )
+          //           .toList(),
+          //     ),
+          //   ),
+          // ),
           // Action Buttons
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -130,6 +156,11 @@ class CheckoutView extends GetView<CheckoutController> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.symmetric(vertical: 12),
+                      textStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -140,8 +171,13 @@ class CheckoutView extends GetView<CheckoutController> {
                     icon: const Icon(Icons.person),
                     label: const Text('Pay Later'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.blue,
                       padding: const EdgeInsets.symmetric(vertical: 12),
+                      textStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
