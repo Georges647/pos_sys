@@ -1,8 +1,4 @@
-
-
-
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:pos/core/routes/paths.dart';
 import 'package:pos/http_client/data/models/items/add_edit_items_model.dart';
@@ -13,7 +9,6 @@ import 'package:pos/modules/clients/controller/clients_controller.dart';
 import '../view/customer_selector_dialog.dart';
 
 class CheckoutController extends GetxController {
-  // Observable variables
   RxDouble totalUSD = 0.0.obs;
   RxDouble totalLBP = 0.0.obs;
   RxDouble exchangeRate = 0.0.obs;
@@ -119,12 +114,10 @@ class CheckoutController extends GetxController {
   }
 
   void showCustomerSelector() {
-    // Ensure ClientsController is available
     if (!Get.isRegistered<ClientsController>()) {
       Get.put(ClientsController());
     }
 
-    // Show customer selector dialog
     Get.dialog(
       const CustomerSelectorDialog(),
       barrierDismissible: false,
@@ -135,11 +128,9 @@ class CheckoutController extends GetxController {
         if (customerId.isNotEmpty) {
           payLater(customerId);
         } else {
-          // No customer selected
           Get.snackbar('Info', 'Please select a customer');
         }
       } else {
-        // Dialog was dismissed without selection
         Get.snackbar('Info', 'Customer selection cancelled');
       }
     });

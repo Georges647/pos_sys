@@ -14,7 +14,6 @@ class SettingsView extends GetView<SettingsController> {
     final exchangeRateController = TextEditingController();
     final tvaController = TextEditingController();
 
-    // Initialize controllers with current values
     storeNameController.text = controller.storeName.value;
     exchangeRateController.text = controller.exchangeRate.value.toString();
     tvaController.text = controller.tva.value.toString();
@@ -66,7 +65,6 @@ class SettingsView extends GetView<SettingsController> {
 
                 const SizedBox(height: 24),
                 
-                // Import/Export Section
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(

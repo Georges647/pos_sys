@@ -28,8 +28,6 @@ class SettingsController extends GetxController {
     await HiveService.storeSetting('tva', tva.value);
     Get.back();
   }
-
-  /// Export data to Excel
   Future<void> exportData() async {
     try {
       Get.dialog(
@@ -40,7 +38,7 @@ class SettingsController extends GetxController {
       final filePath = await ExcelService.exportToExcel();
       
       if (filePath != null) {
-        Get.back(); // Close loading dialog
+        Get.back();
         
         Get.snackbar(
           'Export Successful',
@@ -50,7 +48,7 @@ class SettingsController extends GetxController {
           duration: const Duration(seconds: 3),
         );
       } else {
-        Get.back(); // Close loading dialog
+        Get.back();
         
         Get.snackbar(
           'Export Failed',
@@ -60,7 +58,7 @@ class SettingsController extends GetxController {
         );
       }
     } catch (e) {
-      Get.back(); // Close loading dialog if open
+      Get.back();
       
       Get.snackbar(
         'Export Error',
@@ -71,10 +69,8 @@ class SettingsController extends GetxController {
     }
   }
 
-  /// Import data from Excel
   Future<void> importData() async {
     try {
-      // Show confirmation dialog first
       final confirm = await Get.dialog(
         AlertDialog(
           title: const Text('Import Data'),
@@ -104,9 +100,8 @@ class SettingsController extends GetxController {
       final success = await ExcelService.importFromExcel();
       
       if (success) {
-        Get.back(); // Close loading dialog
+        Get.back();
         
-        // Reload settings after import
         loadSettings();
         
         Get.snackbar(
@@ -116,7 +111,7 @@ class SettingsController extends GetxController {
           colorText: Colors.white,
         );
       } else {
-        Get.back(); // Close loading dialog
+        Get.back();
         
         Get.snackbar(
           'Import Failed',
@@ -126,7 +121,7 @@ class SettingsController extends GetxController {
         );
       }
     } catch (e) {
-      Get.back(); // Close loading dialog if open
+      Get.back();
       
       Get.snackbar(
         'Import Error',

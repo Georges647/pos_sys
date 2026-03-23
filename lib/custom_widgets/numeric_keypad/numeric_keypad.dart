@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-
-/// A customizable numeric keypad widget for inputting numbers.
-///
-/// This widget provides a grid of buttons for digits 0-9, a decimal point,
-/// a backspace, and a clear button. It's highly flexible with callbacks
-/// for each button press and customizable styling.
 class NumericKeypad extends StatelessWidget {
   const NumericKeypad({
     super.key,
@@ -15,8 +9,6 @@ class NumericKeypad extends StatelessWidget {
     this.buttonTextStyle,
   });
 
-  /// Callback function when any key on the keypad is pressed.
-  /// The [value] parameter will be the string representation of the key ('0'-'9', '.', 'DEL', 'CLR').
   final ValueChanged<String> onKeyPressed;
 
   final Color? buttonColor;

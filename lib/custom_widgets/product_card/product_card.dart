@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-
-/// A customizable card widget to display product information.
-///
-/// This widget is designed to be flexible, allowing you to display
-/// a product's image, name, price, and an action button (e.g., "Add to Cart").
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,

@@ -26,7 +26,6 @@ class HomeSceenController extends GetxController {
     final loaded = LocalStorageHelpers.getJsonList('itemsBox', 'categories');
     if (loaded != null) {
       categories.assignAll(loaded.map((c) => c['name'] as String));
-      // Initialize expanded state for all categories
       for (var category in categories) {
         expandedCategories[category] = false;
       }
@@ -142,21 +141,19 @@ class HomeSceenController extends GetxController {
     categories.remove(category);
     expandedCategories.remove(category);
     saveCategories();
-    // Remove all products in this category
     allProducts.removeWhere((p) => p.category == category);
     saveProducts();
   }
 
   void toggleCategoryExpanded(String category) {
     expandedCategories[category] = !(expandedCategories[category] ?? false);
-    expandedCategories.refresh(); // Force refresh
+    expandedCategories.refresh();
   }
 
   List<AddEditItemModel> getProductsByCategory(String category) {
     return allProducts.where((p) => p.category == category).toList();
   }
 
-  // New: find product by barcode-like fields and add to cart
   bool findAndAddByBarcode(String code) {
     final query = code.trim();
     if (query.isEmpty) return false;
@@ -171,7 +168,6 @@ class HomeSceenController extends GetxController {
           }
         }
       } catch (_) {
-        // if model doesn't implement toJson or structure differs, ignore and continue
       }
     }
     return false;

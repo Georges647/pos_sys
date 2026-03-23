@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/themes/styles/styles.dart';
 
-/// A customizable button widget for various actions in a POS system.
-///
-/// This button offers flexibility in text, icon, color, and size,
-/// making it suitable for actions like "Checkout", "Pay", "Cancel", etc.
 class PosButton extends StatelessWidget {
   const PosButton({
     super.key,

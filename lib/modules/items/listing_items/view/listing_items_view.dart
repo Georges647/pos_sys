@@ -21,7 +21,6 @@ class ListingItemsView extends GetView<HomeSceenController> {
       ),
       body: Column(
         children: [
-          // Search bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
@@ -59,7 +58,6 @@ class ListingItemsView extends GetView<HomeSceenController> {
           // Content
           Expanded(
             child: Obx(() {
-              // read searchQuery here so this Obx registers a dependency and rebuilds when the user types
               final q = searchQuery.value.trim().toLowerCase();
 
               if (controller.categories.isEmpty) {
@@ -76,7 +74,6 @@ class ListingItemsView extends GetView<HomeSceenController> {
                   final rawProducts =
                       controller.getProductsByCategory(category);
 
-                  // apply local search filter using the local 'q' captured above
                   final filteredProducts = rawProducts.where((p) {
                     if (q.isEmpty) return true;
                     return (p.description ?? '').toLowerCase().contains(q);
@@ -92,7 +89,6 @@ class ListingItemsView extends GetView<HomeSceenController> {
                       clipBehavior: Clip.hardEdge,
                       child: Column(
                         children: [
-                          // category header
                           InkWell(
                             onTap: () =>
                                 controller.toggleCategoryExpanded(category),
@@ -164,7 +160,6 @@ class ListingItemsView extends GetView<HomeSceenController> {
                             ),
                           ),
 
-                          // animated expansion
                           AnimatedSize(
                             duration: const Duration(milliseconds: 250),
                             curve: Curves.easeInOut,

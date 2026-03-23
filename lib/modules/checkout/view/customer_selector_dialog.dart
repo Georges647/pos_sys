@@ -18,7 +18,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
   @override
   void initState() {
     super.initState();
-    // Load all clients initially
     _searchResults.assignAll(_clientsController.clients);
   }
 
@@ -32,10 +31,8 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
 
   void _searchClients(String query) {
     if (query.isEmpty) {
-      // Load all clients with their balances
 
       final clientsWithBalance = _clientsController.clients.map((client) {
-        // Add safety check for empty client
         if (client.isEmpty) {
           return <String, dynamic>{'id': '', 'name': 'Invalid Client', 'balance': 0.0};
         }
@@ -50,13 +47,10 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
     }
 
     _isSearching.value = true;
-    // Use a small delay to avoid too many search requests
     Future.delayed(const Duration(milliseconds: 300), () {
       final results = _clientsController.searchClients(query);
 
-      // Add balance information to search results
       final resultsWithBalance = results.map((client) {
-        // Add safety check for empty client
         if (client.isEmpty) {
           return <String, dynamic>{'id': '', 'name': 'Invalid Client', 'balance': 0.0};
         }
@@ -118,9 +112,8 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
 
               try {
                 await _clientsController.addNewClient(name, phone);
-                Get.back(); // Close add client dialog
+                Get.back();
                 
-                // Refresh search results to include the new client
                 _searchClients(_searchController.text);
                 
                 Get.snackbar('Success', 'Client added successfully');
@@ -144,7 +137,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -166,7 +158,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
             ),
             const Divider(),
             
-            // Search Field
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -182,7 +173,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
               ),
             ),
             
-            // Results
             Obx(() {
               if (_isSearching.value) {
                 return const Padding(
@@ -192,7 +182,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
               }
 
               if (_searchResults.isEmpty && _searchController.text.isNotEmpty) {
-                // No results found - show add new client option
                 return Expanded(
                   child: Center(
                     child: Column(
@@ -231,7 +220,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
                 );
               }
 
-              // Show results list
               return Expanded(
 
                 child: ListView.builder(
@@ -239,8 +227,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
                   itemBuilder: (context, index) {
                     final client = _searchResults[index];
                     
-
-                    // Add safety check for empty client
                     if (client.isEmpty) {
                       return const ListTile(
                         title: Text('Invalid Client Data'),
@@ -273,7 +259,6 @@ class _CustomerSelectorDialogState extends State<CustomerSelectorDialog> {
                             )
                           : null,
                       onTap: () {
-                        // Close dialog and pass client data
                         Get.back(result: {
                           'id': clientId,
                           'name': clientName,

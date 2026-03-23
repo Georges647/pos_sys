@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,25 +30,21 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   void initState() {
     super.initState();
-    // listen for scanner input and debounce to auto-submit
     _barcodeController.addListener(_onBarcodeChanged);
   }
 
   void _onBarcodeChanged() {
-    // cancel previous debounce
     _scanDebounce?.cancel();
 
     final raw = _barcodeController.text;
     if (raw.isEmpty) return;
 
-    // If scanner sends an enter/newline character, process immediately
     if (raw.contains('\n') || raw.contains('\r')) {
       final code = raw.replaceAll(RegExp(r'[\r\n]'), '').trim();
       _processScannedCode(code);
       return;
     }
 
-    // Otherwise debounce (scanner inputs are fast) and process after short pause
     _scanDebounce = Timer(const Duration(milliseconds: 220), () {
       final code = _barcodeController.text.trim();
       if (code.isNotEmpty) _processScannedCode(code);
@@ -58,11 +52,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   }
 
   Future<void> _processScannedCode(String code) async {
-    // prevent double processing if field cleared rapidly
     if (code.isEmpty) return;
 
     final found = controller.findAndAddByBarcode(code);
-    // clear & refocus for next scan
     _barcodeController.clear();
     _barcodeFocus.requestFocus();
 
@@ -119,14 +111,10 @@ class _HomeScreenViewState extends State<HomeScreenView> {
       ),
       body: Row(
         children: [
-          // ============================
-          // LEFT PANEL: Categories + Products
-          // ============================
           Expanded(
             flex: 3,
             child: Column(
               children: [
-                // ---------- TOP: Category Selector ----------
                 Container(
                   height: 100,
                   color: Colors.grey[100],
@@ -189,7 +177,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                   ),
                 ),
 
-                // ---------- BOTTOM: Product Grid ----------
                 Expanded(
                   child: Expanded(
                     child: Obx(
@@ -221,17 +208,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
             ),
           ),
 
-          // ============================
-          // RIGHT PANEL: Order / Cart
-          // ============================
           Container(
             width: 400,
             color: Colors.grey[100],
             child: Column(
               children: [
-                // -------------------------
-                // Barcode scan field (auto-submit)
-                // -------------------------
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -243,7 +224,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                     decoration: InputDecoration(
                       hintText: 'Scan barcode here',
                       prefixIcon: const Icon(Icons.qr_code_scanner),
-                      // removed check icon to allow automatic submission
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -254,14 +234,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                       labelStyle: Styles.labelTextStyle
                     ),
                     onSubmitted: (value) {
-                      // keep onSubmitted as fallback
                       final code = value.trim();
                       if (code.isNotEmpty) _processScannedCode(code);
                     },
                   ),
                 ),
-
-                // OrderItemCard / cart listing follows
                 Expanded(
                   child: Obx(
                     () => ListView.builder(
@@ -365,9 +342,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
           ),
           TextButton(
             onPressed: () {
-              // Show second confirmation if there are products
               if (productsInCategory.isNotEmpty) {
-                Navigator.of(context).pop(); // Close first dialog
+                Navigator.of(context).pop(); 
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(

@@ -15,7 +15,6 @@ class CheckoutView extends GetView<CheckoutController> {
       ),
       body: Column(
         children: [
-          // Cart Items Section
           Expanded(
             flex: 5,
             child: Obx(

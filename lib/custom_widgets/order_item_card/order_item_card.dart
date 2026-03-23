@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A customizable card widget to display an item in the order/cart.
-///
-/// This widget shows the product name, quantity, unit price, and total price
-/// for a single item. It also includes buttons to increase, decrease, or remove
-/// the item from the order.
 class OrderItemCard extends StatelessWidget {
   const OrderItemCard({
     super.key,

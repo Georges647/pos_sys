@@ -29,7 +29,6 @@ class ClientsController extends GetxController {
     try {
       selectedClientId.value = clientId;
 
-      // Get client name with null safety
       final client = ClientsService.getClientById(clientId);
       if (client != null && client.isNotEmpty) {
         selectedClientName.value = client['name'] ?? 'Unknown';
@@ -39,11 +38,9 @@ class ClientsController extends GetxController {
         return;
       }
 
-      // Load tabs
       final tabs = SalesService.getClientTabs(clientId);
       clientTabs.assignAll(tabs);
 
-      // Load statistics
       final stats = ClientsService.getClientStats(clientId);
       clientStats.assignAll(stats);
     } catch (e) {

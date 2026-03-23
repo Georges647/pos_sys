@@ -28,7 +28,6 @@ class ClientsView extends GetView<ClientsController> {
                 itemBuilder: (context, index) {
                   final client = controller.clients[index];
 
-                  // Add null safety check for client data
                   if (client.isEmpty) {
                     return const Card(
                       child: ListTile(
@@ -40,7 +39,6 @@ class ClientsView extends GetView<ClientsController> {
 
                   final clientId = client['id'];
 
-                  // Add null safety check for client ID
                   if (clientId == null) {
                     return const Card(
                       child: ListTile(
@@ -101,7 +99,6 @@ class ClientsView extends GetView<ClientsController> {
                             () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Statistics
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -140,7 +137,6 @@ class ClientsView extends GetView<ClientsController> {
 
                                       final tab = values[index];
 
-                                      // Add null safety check for tab data
                                       if (tab == null) {
                                         return const Card(
                                           child: ListTile(

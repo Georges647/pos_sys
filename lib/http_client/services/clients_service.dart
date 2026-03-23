@@ -4,7 +4,6 @@ import 'package:pos/http_client/services/sales_service.dart';
 
 class ClientsService {
 
-  /// Get all clients from local storage
   static List<Map<String, dynamic>> getAllClients() {
     try {
       final clients = HiveService.getValue('clients') ?? [];
@@ -17,7 +16,6 @@ class ClientsService {
 
 
 
-  /// Get a single client by ID
   static Map<String, dynamic>? getClientById(String clientId) {
     try {
       final clients = getAllClients();
@@ -26,7 +24,6 @@ class ClientsService {
         orElse: () => <String, dynamic>{},
       );
       
-      // Return null if no client found or if client is empty
       if (client.isEmpty) {
         return null;
       }
@@ -38,7 +35,6 @@ class ClientsService {
     }
   }
 
-  /// Add a new client
   static Future<void> addClient(String name, String phone) async {
     try {
       final newClient = {
@@ -59,7 +55,6 @@ class ClientsService {
     }
   }
 
-  /// Update client information
   static Future<void> updateClient(
     String clientId,
     String name,
@@ -85,7 +80,6 @@ class ClientsService {
     }
   }
 
-  /// Delete a client
   static Future<void> deleteClient(String clientId) async {
     try {
       final clients = getAllClients();
@@ -98,7 +92,6 @@ class ClientsService {
     }
   }
 
-  /// Get client's total balance (sum of all open tabs)
   static double getClientBalance(String clientId) {
     try {
       final tabsMap = SalesService.getClientTabs(clientId);
@@ -116,7 +109,6 @@ class ClientsService {
     }
   }
 
-  /// Get client's payment history
   static List<Map<String, dynamic>> getClientPaymentHistory(String clientId) {
     try {
       final history = HiveService.getValue('client_${clientId}_history') ?? [];
@@ -127,7 +119,6 @@ class ClientsService {
     }
   }
 
-  /// Add payment to client history
   static Future<void> addPaymentToHistory(
     String clientId,
     Map<String, dynamic> payment,
@@ -146,7 +137,6 @@ class ClientsService {
     }
   }
 
-  /// Search clients by name or phone
   static List<Map<String, dynamic>> searchClients(String query) {
     try {
       final clients = getAllClients();
@@ -163,7 +153,6 @@ class ClientsService {
     }
   }
 
-  /// Get client statistics
   static Map<String, dynamic> getClientStats(String clientId) {
     try {
       final tabsMap = SalesService.getClientTabs(clientId);
